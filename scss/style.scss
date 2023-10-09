@@ -5,6 +5,169 @@ html ,body {
     font-size: 62.5%;
 }
 body {
-    background-color: #f00;
+    background-color: #f2f2f2;
     font-size: 1.6rem;
 }
+
+$colors: (
+  primary: #3b71ca,
+  success: #14a44d,
+  danger: #dc4c64,
+  warning:#ffbc00,
+  info: #54b4d3,
+  light: #f8f9fa, 
+  dark: #212529,
+  purple: #8e44ad,
+  purple-light: #a29bfe
+);
+ 
+   
+// هذه الدالة تستخد لمقارنة درجة اللون فاتح ام غامق ؛ تعطى لها اللون وتفارن درجه اللون لو اللون غامق بترجع لون ابيض ولو اللون فاتح بترجع لون اسود 
+// This function use comper color dark or light ; take color ande comper this color if this dark return white else return dark
+@function set-color($color) {
+  @if (lightness($color) < 60) {
+      @return #fff;
+  } @else {
+    @return #333;
+  }
+}
+
+// هذه الدالة تسخدم فى حالة الوقف على عنصر مهين تقوم باخذ اللون وتقارن اللون لو غامق بتفتح درجه اللون ولو فاتح بتغمق درجة اللون 
+// this function use in hover ; this take color and comper this color if dark return light color for 10% else this color is light return dark for 10%
+@function hover-color($color) {
+  @if (lightness($color) > 50) {
+      @return darken($color , 10%);
+  } @else {
+    @return lighten($color , 10%);
+  }
+}
+
+// this use in global 
+
+%btn {
+  border: none;
+  padding: 0.625rem 1.5rem;
+  text-decoration: none;
+  transition: all 0.4s ease-in;
+  border-radius: .25rem;
+}
+//this is while functaion to Generate class from Number to Number 
+$i: 0;
+$size: 0;
+@while $i <= 10 {
+ .p-#{$i} {
+    padding: #{$size / 16}rem !important;
+  }
+  .pb-#{$i} {
+    padding-bottom: #{$size / 16}rem !important;
+  }
+  .pt-#{$i} {
+    padding-top: #{$size / 16}rem !important;
+  }
+  .px-#{$i} {
+    padding-inline: #{$size / 16}rem !important;
+  }
+   .py-#{$i} {
+    padding-block: #{$size / 16}rem !important;
+  }
+  .ps-#{$i} {
+    padding-left: unset !important;
+    padding-inline-start: #{$size / 16}rem !important;
+  }
+  .pe-#{$i} {
+    padding-right: unset !important;
+    padding-inline-end: #{$size / 16}rem !important;
+  }
+  .mx-#{$i} {
+    margin-inline: #{$size / 16}rem !important;
+  }
+   .my-#{$i} {
+    margin-block: #{$size / 16}rem !important;
+  }
+  .m-#{$i} {
+    margin: #{$size / 16}rem !important;
+  }
+  .mb-#{$i} {
+    margin-bottom: #{$size / 16}rem !important;
+  }
+  .mt-#{$i} {
+    margin-top: #{$size / 16}rem !important;
+  }
+  .ms-#{$i} {
+    margin-left: unset !important;
+    margin-inline-start: #{$size / 16}rem !important;
+  }
+  .me-#{$i} {
+    margin-right: unset !important;
+    margin-inline-end: #{$size / 16}rem !important;
+  }
+  
+  // Increment $i by double
+  $i: $i + 1;
+  $size : $size + 4;
+}
+// @for $i from 10 through 20  {
+//   .p-#{$i} {
+//     padding: #{$i}rem !important;
+//   }
+//   .ps-#{$i} {
+//     padding-left: unset !important;
+//     padding-inline-start: #{$i}rem !important;
+//   }
+//   .pe-#{$i} {
+//     padding-right: unset !important;
+//     padding-inline-end: #{$i}rem !important;
+//   }
+//   .m-#{$i} {
+//     margin: #{$i}rem !important;
+//   }
+//   .ms-#{$i} {
+//     margin-left: unset !important;
+//     margin-inline-start: #{$i}rem !important;
+//   }
+//   .me-#{$i} {
+//     margin-right: unset !important;
+//     margin-inline-end: #{$i}rem !important;
+//   }
+//  $i: $i + 5;
+// }
+
+
+// Over Right Class Bootstap  to Multi Directional
+.ps-auto {
+  padding-left: unset !important;
+  padding-inline-start: auto !important;
+}
+.ms-auto {
+  margin-left: unset !important;
+  margin-inline-start: auto !important;
+}
+.pe-auto {
+  padding-right: unset !important;
+  padding-inline-end: auto !important;
+}
+.me-auto {
+  margin-right: unset !important;
+  margin-inline-end: auto !important;
+}
+
+// this for eash to map class color to Generate more classs
+@each $name,$color in $colors {
+  .bg-#{$name} {
+    background-color: $color !important;
+  }
+  .text-#{$name} {
+    color: $color !important;
+  }
+  .btn-#{$name} {
+    background-color: $color;
+    color: set-color($color);
+    @extend %btn;
+    
+    &:hover {
+      background-color: hover-color($color);
+      transform: scale(1.1);
+      box-shadow:0 8px 9px -4px rgba($color,0.3),0 4px 18px 0 rgba($color,0.2)
+    }
+  }
+} 
