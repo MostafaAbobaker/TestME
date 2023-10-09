@@ -1,0 +1,12 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #f00;
+  font-size: 1.6rem;
+}/*# sourceMappingURL=style.css.map */
